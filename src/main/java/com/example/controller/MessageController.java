@@ -3,6 +3,7 @@ package com.example.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,6 +40,15 @@ public class MessageController {
     public ResponseEntity<Message> getMessageById(@PathVariable int id) {
         Message message = messageService.getMessageById(id);
         return ResponseEntity.ok(message);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Integer> deleteMessageById(@PathVariable int id) {
+        int rows = messageService.deleteMessageById(id);
+        if (rows > 0) {
+            return ResponseEntity.ok(rows);
+        }
+        return ResponseEntity.ok().build();
     }
 
 }

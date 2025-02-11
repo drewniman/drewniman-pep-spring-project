@@ -44,4 +44,12 @@ public class MessageService {
         return messageRepository.findById(id).orElse(null);
     }
 
+    public int deleteMessageById(int id) {
+        if (messageRepository.findById(id).isPresent()) {
+            messageRepository.deleteById(id);
+            return 1;
+        }
+        return 0;
+    }
+
 }
