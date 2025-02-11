@@ -40,4 +40,8 @@ public class MessageService {
         return messageRepository.findAll();
     }
 
+    public Message getMessageById(int id) {
+        return messageRepository.findById(id).orElse(null);
+    }
+
 }
