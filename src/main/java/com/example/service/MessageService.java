@@ -62,6 +62,10 @@ public class MessageService {
         messageRepository.save(updatedMessage);
     }
 
+    public List<Message> getMessagesByAccount(int accountId) {
+        return messageRepository.findByPostedBy(accountId);
+    }
+
     private void validateMessage(Message message) {
         if (message.getMessageText() == null || message.getMessageText().isEmpty()) {
             throw new InvalidMessageException("Message must not be empty.");
