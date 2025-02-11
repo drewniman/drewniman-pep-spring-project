@@ -23,16 +23,13 @@ public class MessageService {
     }
 
     public Message createMessage(Message message) {
-        if (message.getMessageText().isEmpty()) {
-            throw new InvalidMessageException("Message must not be empty.");
-        }
-        if (message.getMessageText().length() > 255) {
-            throw new InvalidMessageException("Message must not be over 255 characters.");
-        }
+        validateMessage(message);
+
         Optional<Account> optionalAccount = accountRepository.findById(message.getPostedBy());
         if (!optionalAccount.isPresent()) {
             throw new InvalidMessageException("The account does not exist.");
         }
+
         return messageRepository.save(message);
     }
 
@@ -50,6 +47,28 @@ public class MessageService {
             return 1;
         }
         return 0;
+    }
+
+    public void updateMessage(int id, Message message) {
+        validateMessage(message);
+
+        Optional<Message> optionalMessage = messageRepository.findById(id);
+        if (optionalMessage.isEmpty()) {
+            throw new InvalidMessageException("Message does not exist.");
+        }
+
+        Message updatedMessage = optionalMessage.get();
+        updatedMessage.setMessageText(message.getMessageText());
+        messageRepository.save(updatedMessage);
+    }
+
+    private void validateMessage(Message message) {
+        if (message.getMessageText() == null || message.getMessageText().isEmpty()) {
+            throw new InvalidMessageException("Message must not be empty.");
+        }
+        if (message.getMessageText().length() > 255) {
+            throw new InvalidMessageException("Message must not be over 255 characters.");
+        }
     }
 
 }
