@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entity.Account;
 import com.example.service.AccountService;
+import com.example.service.MessageService;
 
 /**
  * TODO: You will need to write your own endpoints and handlers for your controller using Spring. The endpoints you will need can be
@@ -36,4 +37,5 @@ public class SocialMediaController {
         Account loggedAccount = accountService.login(account);
         return ResponseEntity.ok(loggedAccount);
     }
+
 }

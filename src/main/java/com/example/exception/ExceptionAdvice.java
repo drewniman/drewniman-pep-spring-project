@@ -26,4 +26,10 @@ public class ExceptionAdvice {
         return ex.getMessage();
     }
 
+    @ExceptionHandler(InvalidMessageException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String handleInvalidMessage(InvalidMessageException ex) {
+        return ex.getMessage();
+    }
+
 }
