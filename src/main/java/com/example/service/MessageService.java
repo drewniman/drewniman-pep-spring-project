@@ -1,5 +1,6 @@
 package com.example.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -33,6 +34,10 @@ public class MessageService {
             throw new InvalidMessageException("The account does not exist.");
         }
         return messageRepository.save(message);
+    }
+
+    public List<Message> getMessages() {
+        return messageRepository.findAll();
     }
 
 }
