@@ -1,10 +1,13 @@
 package com.example.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.example.entity.Account;
 import com.example.exception.DuplicateUsernameException;
 import com.example.exception.InvalidAccountException;
+import com.example.exception.UnauthorizedException;
 import com.example.repository.AccountRepository;
 
 @Service
@@ -27,6 +30,14 @@ public class AccountService {
             throw new DuplicateUsernameException("An account with that username already exists.");
         }
         return accountRepository.save(account);
+    }
+
+    public Account login(Account account) throws UnauthorizedException {
+        Optional<Account> optionalAccount = accountRepository.findByUsernameAndPassword(account.getUsername(), account.getPassword());
+        if (optionalAccount.isPresent()) {
+            return optionalAccount.get();
+        }
+        throw new UnauthorizedException("Invalid username and/or password.");
     }
 
 }

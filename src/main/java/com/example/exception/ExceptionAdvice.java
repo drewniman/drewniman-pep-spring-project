@@ -20,4 +20,10 @@ public class ExceptionAdvice {
         return ex.getMessage();
     }
 
+    @ExceptionHandler(UnauthorizedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public String handleUnauthorized(UnauthorizedException ex) {
+        return ex.getMessage();
+    }
+
 }
